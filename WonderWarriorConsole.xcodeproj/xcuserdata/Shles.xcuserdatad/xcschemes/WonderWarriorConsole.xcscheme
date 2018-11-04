@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   version = "1.3">
+   <BuildAction>
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForRunning = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4C287C05CB3887C6C1C8E5FB"
+               BuildableName = "WonderWarriorConsole"
+               BlueprintName = "WonderWarriorConsole"
+               ReferencedContainer = "container:WonderWarriorConsole.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <LaunchAction
+      useCustomWorkingDirectory = "NO"
+      buildConfiguration = "Debug"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "4C287C05CB3887C6C1C8E5FB"
+            BuildableName = "WonderWarriorConsole"
+            BlueprintName = "WonderWarriorConsole"
+            ReferencedContainer = "container:WonderWarriorConsole.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </LaunchAction>
+</Scheme>
