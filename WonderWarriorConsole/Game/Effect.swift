@@ -5,6 +5,8 @@
 
 import Foundation
 
+//TODO: need to design something that return new effect for fighter.
+
 protocol Effect {
 
     associatedtype CharacteristicsSet
@@ -42,8 +44,6 @@ class AnyEffect<CharacteristicsSet>: Effect {
     }
 
 }
-
-
 
 class SimpleAttack: Ability {
     func affectHealth(health: Float) -> Float {

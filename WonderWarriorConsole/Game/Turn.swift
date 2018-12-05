@@ -20,7 +20,7 @@ class SimpleSwitchingTurn: Turn {
         //swap fighters and apply attack to deffender
         return FightStateFrom(
             orderedFighters: OrderedFightersFrom(
-                attacker: FighterApplyingAbilyty(
+                attacker: FighterApplyingAbility(
                     fighter: initialState.defender,
                     ability: initialState.attacker.nextAbility(selection: abilitySelection)
                 ),

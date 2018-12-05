@@ -17,8 +17,8 @@ protocol Ability {
     func affectHealth(health: Float) -> Float
 }
 
-protocol AbilitySelectoin {
-    func select(from: [Ability]) -> Ability
+protocol AbilitySelection {
+    func select<C>(from: [AnyEffect<C>]) -> AnyEffect<C>
 }
 
 

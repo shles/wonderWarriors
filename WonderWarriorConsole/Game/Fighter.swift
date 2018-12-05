@@ -6,53 +6,66 @@
 import Foundation
 
 protocol Fighter {
+    //TODO: make generic
+    typealias C = BasicCharacteristics
     var name: String { get }
     var state: FighterState {get}
-    var gear: Gear { get }
-    func nextAbility(selection: AbilitySelectoin) -> Ability
+    var gear: AnyEffect<C> { get }
+    func nextAbility(selection: AbilitySelection) -> AnyEffect<C>
 }
 
-class FighterFrom: Fighter {
-    var name: String
-    var state: FighterState
-    var gear: Gear
+protocol BasicCharacteristics {
+    var health: Float { get }
+}
 
-    //bad. same problem with distinguishing abilities types
-    func nextAbility(selection: AbilitySelectoin) -> Ability {
-        return selection.select(from: atkAbilities)
-    }
-    private var defAbilities: [Ability]
-    private var atkAbilities: [Ability]
-    init(name: String, initialState: FighterState, gear: Gear, atkAbilities: [Ability], defAbilities: [Ability]) {
+class FullBasicCharacteristics: BasicCharacteristics {
+    private(set) var health: Float = 100
+}
+
+class FighterWithBasicCharacteristicsFrom: Fighter {
+
+    private(set) var name: String
+    private(set) var state: FighterState
+    private(set) var gear: AnyEffect<BasicCharacteristics>
+
+    private let abilities: [AnyEffect<BasicCharacteristics>]
+
+    init (name: String,
+          initialState: FighterState,
+          gear: AnyEffect<BasicCharacteristics>,
+          abilities: [AnyEffect<BasicCharacteristics>]) {
         self.gear = gear
-        self.atkAbilities = atkAbilities
-        self.defAbilities = defAbilities
         self.state = initialState
         self.name = name
+        self.abilities = abilities
+}
+
+    func nextAbility(selection: AbilitySelection) -> AnyEffect<BasicCharacteristics> {
+        return selection.select(from: abilities)
     }
 }
 
-class FighterApplyingAbilyty: Fighter {
+class FighterWithBasicCharacteristicsApplyingAbility: Fighter {
 
     var name: String {
         return originFighter.name
     }
 
-    func nextAbility(selection: AbilitySelectoin) -> Ability {
+    func nextAbility(selection: AbilitySelection) -> AnyEffect<BasicCharacteristics> {
         return originFighter.nextAbility(selection: selection)
     }
     lazy var state: FighterState = {
         return FighterStateApplyingAbility(fighterState: originFighter.state, ability: ability)
     }()
 
-    var gear: Gear {
-        return GearApplyingAbility(gear: originFighter.gear, ability: ability)
-    }
+    lazy var gear: AnyEffect<BasicCharacteristics> = {
+        return ability.modifyEffect(effect: originFighter.gear)
+    }()
 
     private var originFighter: Fighter
-    private var ability: Ability
+    private var ability: AnyEffect<BasicCharacteristics>
 
-    init(fighter: Fighter, ability: Ability) {
+    init(fighter: Fighter, ability: AnyEffect<BasicCharacteristics>) {
         self.ability = ability
         self.originFighter = fighter
     }
